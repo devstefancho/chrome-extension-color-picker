@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "Design Color Pallete",
+  "version": "1.0",
+  "description": "Extension for designer's color pallete",
+  "icons": {
+    "16": "images/icon-32.png",
+    "32": "images/icon-32.png",
+    "48": "images/icon-32.png",
+    "128": "images/icon-32.png"
+  },
+  "content_scripts": [
+    {
+      "js": ["content.js"],
+      "matches": [
+        "https://developer.chrome.com/docs/extensions/*",
+        "https://developer.chrome.com/docs/webstore/*"
+      ]
+    }
+  ],
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": "images/icon-32.png"
+  }
+}

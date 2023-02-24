@@ -1,34 +1,50 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { useState } from "react";
+import CopyIcon from "./assets/copy.icon";
+import PipetteIcon from "./assets/pipette.icon";
+
+type EyeDropperResponse = {
+  sRGBHex: string;
+};
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [pickedColor, setPickedColor] = useState("");
+  const clickPicker = async () => {
+    const result: EyeDropperResponse = await new window.EyeDropper().open();
+    setPickedColor(result.sRGBHex);
+  };
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
+    <>
+      <header>
+        <div className="title-prefix-circle"></div>
+        <div className="title">Color dropper</div>
+      </header>
+      <main className="color-picker-body">
+        <div className="color-picker">
+          <button onClick={clickPicker}>
+            <PipetteIcon />
+          </button>
+          <span
+            className="color-bar"
+            style={{ backgroundColor: pickedColor }}
+          ></span>
+        </div>
+        <div className="color-code-container">
+          {/* <label htmlFor="color-code--selector"></label> */}
+          <select id="color-code--selector" name="color-code--selector">
+            <option value="hex">Hex</option>
+            <option value="hsl">HSL</option>
+          </select>
+          <div className="color-code">
+            <span className="color-code-name">{pickedColor}</span>
+            <button className="color-code-copy">
+              <CopyIcon />
+            </button>
+          </div>
+        </div>
+      </main>
+    </>
+  );
 }
 
-export default App
+export default App;
