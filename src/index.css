@@ -1,3 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .select-rect {
+    @apply flex justify-between items-center p-[12px] w-[100px] h-[40px] bg-gray-bg border-gray-bg border-[1px];
+  }
+}
+
 button {
   all: unset;
   line-height: 0;
@@ -63,9 +73,13 @@ header {
   margin-top: 8px;
 }
 
-select[name="color-code--selector"] {
+ul.select-box {
   width: 100px;
   height: 40px;
+}
+
+.select-box li {
+  background-color: orangered;
 }
 
 .color-code {
