@@ -2,23 +2,34 @@ import { useState } from "react";
 import ArrowDown from "./assets/arrow-down.icon";
 import CopyIcon from "./assets/copy.icon";
 import PipetteIcon from "./assets/pipette.icon";
+import util from "./utils/picker";
 
 type EyeDropperResponse = {
   sRGBHex: string;
 };
 
 enum Mode {
-  Hex = "Hex",
-  Hsl = "Hsl",
+  Hex = "hex",
+  Hsl = "hsl",
 }
 
+type ColorData = {
+  [Mode.Hex]: string;
+  [Mode.Hsl]: string;
+};
+
+const modeText = {
+  hex: "Hex",
+  hsl: "Hsl",
+};
+
 function App() {
-  const [pickedColor, setPickedColor] = useState("");
+  const [colorData, setColorData] = useState<ColorData>();
   const [mode, setMode] = useState<Mode>(Mode.Hex);
   const [isOpenSelectBox, setIsOpenSelectBox] = useState(false);
   const clickPicker = async () => {
     const result: EyeDropperResponse = await new window.EyeDropper().open();
-    setPickedColor(result.sRGBHex);
+    setColorData({ hex: result.sRGBHex, hsl: util.rgbToHsl(result.sRGBHex) });
   };
 
   const clickOption = (mode: Mode) => {
@@ -40,7 +51,7 @@ function App() {
           </button>
           <span
             className="color-bar"
-            style={{ backgroundColor: pickedColor }}
+            style={{ backgroundColor: colorData?.hex }}
           ></span>
         </div>
         {/* Select Box 라인 */}
@@ -53,7 +64,7 @@ function App() {
             }`}
             onClick={() => setIsOpenSelectBox((prev) => !prev)}
           >
-            <div>{mode}</div>
+            <div>{modeText[mode]}</div>
             <div>
               <ArrowDown />
             </div>
@@ -68,17 +79,22 @@ function App() {
           >
             {mode === Mode.Hsl ? (
               <li className="select-rect" onClick={() => clickOption(Mode.Hex)}>
-                {Mode.Hex}
+                {modeText[Mode.Hex]}
               </li>
             ) : (
               <li className="select-rect" onClick={() => clickOption(Mode.Hsl)}>
-                {Mode.Hsl}
+                {modeText[Mode.Hsl]}
               </li>
             )}
           </ul>
           <div className="border-gray-bg color-code hover:border-black border-[1px]">
-            <span className="color-code-name">{pickedColor}</span>
-            <button className="color-code-copy">
+            <span className="color-code-name">{colorData?.[mode]}</span>
+            <button
+              className="color-code-copy"
+              onClick={() =>
+                colorData?.[mode] && util.copyToClipboard(colorData[mode])
+              }
+            >
               <CopyIcon />
             </button>
           </div>

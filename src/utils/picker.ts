@@ -1,4 +1,4 @@
-const RGBToHSL = (hexaCode: string) => {
+const rgbToHsl = (hexaCode: string) => {
   const [_, r, g, b] =
     /^#([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})/g
       ?.exec(hexaCode)
@@ -17,11 +17,18 @@ const RGBToHSL = (hexaCode: string) => {
     60 * h < 0 ? 60 * h + 360 : 60 * h,
     100 * (s ? (l <= 0.5 ? s / (2 * l - s) : s / (2 - (2 * l - s))) : 0),
     (100 * (2 * l - s)) / 2,
-  ].map((code) => Math.round(code));
+  ]
+    .map((code) => Math.round(code))
+    .join();
+};
+
+const copyToClipboard = (value: string) => {
+  navigator.clipboard.writeText(value);
 };
 
 const util = {
-  RGBToHSL,
+  rgbToHsl,
+  copyToClipboard,
 };
 
 export default util;
