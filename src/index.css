@@ -49,28 +49,8 @@ header {
   padding: 16px;
 }
 
-.color-picker {
-  display: flex;
-  column-gap: 10px;
-}
-
-.color-bar {
-  display: inline-block;
-  flex-grow: 1;
-  border: 1px solid #e7e7e8;
-  box-sizing: border-box;
-  border-radius: 4px;
-}
-
 .picker-btn {
   color: orange;
-}
-
-.color-code-container {
-  display: flex;
-  align-items: center;
-  column-gap: 10px;
-  margin-top: 8px;
 }
 
 ul.select-box {
@@ -80,17 +60,6 @@ ul.select-box {
 
 .select-box li {
   background-color: orangered;
-}
-
-.color-code {
-  flex-grow: 1;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 40px;
-  padding-inline: 12px;
-  border-radius: 4px;
-  background-color: #f3f3f4;
 }
 
 .color-code-name {
