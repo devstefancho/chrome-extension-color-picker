@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Design Color Pallete",
-  "version": "1.0",
-  "description": "Extension for designer's color pallete",
+  "name": "Color Picker",
+  "version": "0.1",
+  "description": "The extension provides a user-friendly interface for UI/UX designers to easily select and copy color values",
   "icons": {
     "16": "images/icon-32.png",
     "32": "images/icon-32.png",
