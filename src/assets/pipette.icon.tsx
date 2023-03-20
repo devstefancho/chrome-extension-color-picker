@@ -16,8 +16,10 @@ const PipetteIcon = ({ isActive }: Props) => {
         width="36"
         height="36"
         rx="4"
-        className={`fill-white ${
-          isActive ? "fill-[#653CDD]" : "hover:fill-gray-bg"
+        className={`${
+          isActive
+            ? "fill-[#653CDD] hover:fill-[#653CDD]"
+            : "fill-white hover:fill-gray-bg"
         }`}
       />
       <path

@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build:popup": "tsc && vite --config vite.popup-config.ts build",
+    "build:content": "tsc && vite --config vite.content-config.ts build && cp tmp/content.js dist/content.js && rm -rf tmp",
+    "build": "yarn build:popup && yarn build:content",
     "preview": "vite preview",
     "zip": "zip -r color-picker.zip dist"
   },
@@ -14,6 +16,7 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@types/node": "^18.15.3",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "@vitejs/plugin-react": "^3.1.0",

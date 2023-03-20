@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CopyIcon from "./assets/copy.icon";
 import Logo from "./assets/logo.icon";
 import PipetteIcon from "./assets/pipette.icon";
@@ -11,14 +11,34 @@ type EyeDropperResponse = {
 type ColorData = string;
 
 function App() {
-  const [colorData, setColorData] = useState<ColorData>();
+  const [colorCode, setColorCode] = useState<ColorData>();
   const [isActive, setIsActive] = useState<boolean>(false);
 
+  const sendMessage = (message: { [key: string]: string | boolean }) => {
+    // TODO: any type 제거
+    chrome.tabs.query(
+      { active: true, currentWindow: true },
+      function (tabs: any) {
+        chrome.tabs.sendMessage(tabs[0].id, message);
+      }
+    );
+  };
+
   const clickPicker = async () => {
+    // Activated
     setIsActive(true);
-    const result: EyeDropperResponse = await new window.EyeDropper().open();
+    const eyeDropper = new window.EyeDropper();
+    sendMessage({ state: "Activated" });
+    const result: EyeDropperResponse = await eyeDropper.open();
+
+    // Deactivated
     setIsActive(false);
-    setColorData(result.sRGBHex.toUpperCase());
+
+    // Set Color
+    const newColor = result.sRGBHex.toUpperCase();
+    setColorCode(newColor);
+    sendMessage({ colorCode: newColor });
+    util.copyToClipboard(newColor);
   };
 
   return (
@@ -35,7 +55,7 @@ function App() {
           </button>
           <span
             className="inline-block border-[1px] border-[#e7e7e8] box-border rounded-[4px] w-[296px]"
-            style={{ backgroundColor: colorData }}
+            style={{ backgroundColor: colorCode }}
           ></span>
         </div>
         {/* Select Box 라인 */}
@@ -47,10 +67,10 @@ function App() {
             id="text-rgb"
             className="flex justify-between items-center h-[40px] rounded-[4px] border-gray-bg bg-gray-200 p-[12px] w-[296px]"
           >
-            <span className="color-code-name">{colorData}</span>
+            <span className="color-code-name">{colorCode}</span>
             <button
               className="color-code-copy"
-              onClick={() => colorData && util.copyToClipboard(colorData)}
+              onClick={() => colorCode && util.copyToClipboard(colorCode)}
             >
               <CopyIcon />
             </button>
