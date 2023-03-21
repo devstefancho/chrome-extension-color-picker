@@ -6,7 +6,7 @@ interface Message {
 }
 
 function Content() {
-  const [isShowPopup, setIsShowPopup] = useState(false);
+  const [alertVisible, setAlertVisible] = useState(false);
   const [colorCode, setColorCode] = useState<string>();
   useEffect(() => {
     chrome.runtime.onMessage.addListener(function (
@@ -20,10 +20,10 @@ function Content() {
           : "from the extension"
       );
       if (request.colorCode) {
-        setIsShowPopup(true);
+        setAlertVisible(true);
         setColorCode(request.colorCode);
         setTimeout(() => {
-          setIsShowPopup(false);
+          setAlertVisible(false);
         }, 3000);
         console.log(request.colorCode);
       }
@@ -41,7 +41,7 @@ function Content() {
 
   return (
     <div>
-      {isShowPopup && (
+      {alertVisible && (
         <div
           style={{
             position: "fixed",
