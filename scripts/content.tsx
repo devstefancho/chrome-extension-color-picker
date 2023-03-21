@@ -8,31 +8,29 @@ interface Message {
 function Content() {
   const [alertVisible, setAlertVisible] = useState(false);
   const [colorCode, setColorCode] = useState<string>();
+
   useEffect(() => {
     chrome.runtime.onMessage.addListener(function (
       request,
       sender,
       sendResponse
     ) {
-      console.log(
-        sender.tab
-          ? "from a content script:" + sender.tab.url
-          : "from the extension"
-      );
+      // colorCode 팝업 띄우기
       if (request.colorCode) {
+        console.log(request.colorCode);
         setAlertVisible(true);
         setColorCode(request.colorCode);
         setTimeout(() => {
           setAlertVisible(false);
         }, 3000);
-        console.log(request.colorCode);
       }
+
+      // App.tsx의 clickPicker와 통신 테스트용으로 미리 만들어둠
       if (request.state) {
         if (request.state === "Activated") {
           console.log("Activated");
         }
         if (request.state === "Deactivated") {
-          // clear event listener
           console.log("Deactivated");
         }
       }

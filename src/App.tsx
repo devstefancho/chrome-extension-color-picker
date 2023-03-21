@@ -35,6 +35,7 @@ function App() {
     setIsActive(false);
 
     // Set Color
+    console.log("sendMessage", result);
     const newColor = result.sRGBHex.toUpperCase();
     setColorCode(newColor);
     sendMessage({ colorCode: newColor });
@@ -42,34 +43,38 @@ function App() {
   };
 
   return (
-    <>
-      <header>
+    <div>
+      <header className="flex items-center gap-[8px] p-[12px] pl-[16px] border border-gray-300 h-12">
         <Logo />
-        <div className="title">Color Picker</div>
+        <div className="text-[#383838] font-bold text-[14px] leading-[21px]">
+          Color Picker
+        </div>
       </header>
-      <main className="color-picker-body">
-        {/* 스포이드 라인 */}
+
+      <main className="border border-gray-300 border-t-0 p-[16px]">
+        {/* 스포이드 영역 */}
         <div id="color-picker" className="flex">
-          <button onClick={clickPicker} className="mr-auto">
+          <button
+            onClick={clickPicker}
+            className={`${
+              isActive ? "bg-[#653CDD] hover:bg-[#653CDD]" : "hover:bg-gray-bg"
+            } mr-auto rounded-[4px]`}
+          >
             <PipetteIcon isActive={isActive} />
           </button>
           <span
-            className="inline-block border-[1px] border-[#e7e7e8] box-border rounded-[4px] w-[296px]"
-            style={{ backgroundColor: colorCode }}
+            className={`inline-block border-[1px] border-[#e7e7e8] box-border rounded-[4px] w-[296px]`}
+            style={{ background: colorCode }}
           ></span>
         </div>
-        {/* Select Box 라인 */}
+        {/* Hex 영역 */}
         <div className="relative flex items-center mt-[8px] cursor-pointer select-none">
           <div className="font-medium text-[14px] mr-auto">
             <div className="w-[38px] text-center">Hex</div>
           </div>
-          <div
-            id="text-rgb"
-            className="flex justify-between items-center h-[40px] rounded-[4px] border-gray-bg bg-gray-200 p-[12px] w-[296px]"
-          >
-            <span className="color-code-name">{colorCode}</span>
+          <div className="flex justify-between items-center h-[40px] rounded-[4px] border-gray-bg bg-gray-200 p-[12px] w-[296px]">
+            <span className="text-sm">{colorCode}</span>
             <button
-              className="color-code-copy"
               onClick={() => colorCode && util.copyToClipboard(colorCode)}
             >
               <CopyIcon />
@@ -77,7 +82,7 @@ function App() {
           </div>
         </div>
       </main>
-    </>
+    </div>
   );
 }
 

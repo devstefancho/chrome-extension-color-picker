@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Color Picker",
-  "version": "0.1",
+  "version": "0.2",
   "description": "The extension provides a user-friendly interface for UI/UX designers to easily select and copy color values",
   "icons": {
     "16": "images/icon-32.png",
