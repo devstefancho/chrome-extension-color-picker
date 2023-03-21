@@ -42,6 +42,7 @@ function Content() {
       {alertVisible && (
         <div
           style={{
+            zIndex: 999,
             position: "fixed",
             top: "20px",
             left: "50%",
